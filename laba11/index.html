@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тестовая форма для CI/CD</title>
+    <style>
+        body { font-family: sans-serif; max-width: 500px; margin: 50px auto; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; }
+        input { width: 100%; padding: 8px; box-sizing: border-box; }
+        button { padding: 10px 15px; cursor: pointer; }
+        #status-message { margin-top: 20px; padding: 10px; border-radius: 5px; }
+        .success { background-color: #d4edda; color: #155724; }
+        .error { background-color: #f8d7da; color: #721c24; }
+    </style>
+</head>
+<body>
+    <h1>Регистрация на мероприятие</h1>
+    <form id="event-form" novalidate>
+        <div class="form-group">
+            <label for="name-input">Ваше имя:</label>
+            <input type="text" id="name-input" required>
+        </div>
+        <div class="form-group">
+            <label for="email-input">Ваш Email:</label>
+            <input type="email" id="email-input" required>
+        </div>
+        <button type="submit" id="submit-button">Отправить</button>
+    </form>
+    <div id="status-message"></div>
+
+    <script>
+        document.getElementById('event-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const name = document.getElementById('name-input').value;
+            const email = document.getElementById('email-input').value;
+            const messageDiv = document.getElementById('status-message');
+
+            if (name && email) {
+                messageDiv.textContent = 'Вы успешно зарегистрированы!';
+                messageDiv.className = 'success';
+            } else {
+                messageDiv.textContent = 'Пожалуйста, заполните все поля.';
+                messageDiv.className = 'error';
+            }
+        });
+    </script>
+</body>
+</html>

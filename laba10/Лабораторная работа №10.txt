@@ -1,0 +1,62 @@
+Для выполнения данной работы нужно сгенерировать токен на сайте gorest.co.in (если используется для выполнения работы данный сайт)
+
+--2
+GET https://gorest.co.in/public/v2/users
+
+GET https://gorest.co.in/public/v2/users/99999
+
+--3
+GET https://gorest.co.in/public/v2/users
+pm.test("Status 200", () => pm.response.to.have.status(200));
+
+GET https://gorest.co.in/public/v2/users/99999
+pm.test("Status 404", () => pm.response.to.have.status(404));
+
+--4
+POST https://gorest.co.in/public/v2/users
+{"name":"Ivan Ivanov", "gender":"male", "email":"ivan123@test.com", "status":"active"}
+pm.test("Status 201", () => pm.response.to.have.status(201));
+
+GET https://gorest.co.in/public/v2/users/{id}
+pm.test("Status 200", () => pm.response.to.have.status(200));
+
+PUT https://gorest.co.in/public/v2/users/{id}
+{"name":"Ivan Updated"}
+pm.test("Status 200", () => pm.response.to.have.status(200));
+
+DELETE https://gorest.co.in/public/v2/users/{id}
+pm.test("Status 204", () => pm.response.to.have.status(204));
+
+--5
+GET https://gorest.co.in/public/v2/users/99999
+pm.test("Status 404", () => pm.response.to.have.status(404));
+
+POST https://gorest.co.in/public/v2/users
+{"name": "Invalid", "email": "bad-email"}
+pm.test("400 Uncorrect body", () => pm.response.to.have.status(400));
+
+POST https://gorest.co.in/public/v2/users
+{}
+pm.test("400 Uncorrect body", () => pm.response.to.have.status(400));
+
+--6
+DELETE https://gorest.co.in/public/v2/users/{id}
+No Auth
+pm.test("Status 403 Forbidden", () => pm.response.to.have.status(403));
+
+--7
+POST https://gorest.co.in/public/v2/users
+{"name": "Invalid", "email": "bad-email"}
+pm.test("Status 422 - Validation failed", () => pm.response.to.have.status(422));
+
+POST https://gorest.co.in/public/v2/users
+{}
+pm.test("Status 422 - Validation failed", () => pm.response.to.have.status(422));
+
+--8
+GET https://gorest.co.in/public/v2/users?page=1&per_page=5
+pm.test("Max 5 users", () => pm.expect(pm.response.json().length).to.be.at.most(5));
+
+
+
+
